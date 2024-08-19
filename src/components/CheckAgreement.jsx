@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 function CheckAgreement(
   {
@@ -6,15 +6,24 @@ function CheckAgreement(
     scrollDown
   }
 ) {
+
+  const checkboxRef = useRef(null);
+  const checkboxValue = () => {
+    console.log(checkboxRef.current.checked)
+  }
+
   return (
     <>
       < div className='flex flex-col sm:flex-row sm:justify-between sm:items-center items-center '>
         <div className='checkbox flex gap-2 text-2xl font-bold ml-10'>
           <div>
             <input
+              ref={checkboxRef}
               type="checkbox"
-              className="w-6 h-6 " 
-              />
+              onChange={checkboxValue}
+              className="w-6 h-6 "
+
+            />
           </div>
           <div className='text-slate-900 '> I agree terms & conditions</div>
         </div>
