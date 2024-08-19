@@ -3,14 +3,14 @@ import CheckAgreement from './CheckAgreement'
 
 
 function Rules() {
-    
-    const getScrollDistance = ()=>{
+
+    const getScrollDistance = () => {
         console.log("yes")
-        if(window.matchMedia('(max-width: 640px)').matches){
+        if (window.matchMedia('(max-width: 640px)').matches) {
             return 250
-        }else if(window.matchMedia('(min-width: 641px) and (max-width:768px)').matches){
+        } else if (window.matchMedia('(min-width: 641px) and (max-width:768px)').matches) {
             return 260
-        }else{
+        } else {
             return 200
         }
     }
@@ -27,8 +27,8 @@ function Rules() {
         }
     }
 
-    const scrollDown = ()=>{
-        if(scrollRef.current){
+    const scrollDown = () => {
+        if (scrollRef.current) {
             scrollRef.current?.scrollBy(
                 {
                     top: -getScrollDistance(),
