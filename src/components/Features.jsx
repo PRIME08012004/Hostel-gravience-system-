@@ -4,7 +4,7 @@ import featurebg from '../assets/3.jpeg'
 
 function Features() {
   return (
-    <div className=" w-[100vw] h-[100vh]  bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${featurebg})` }}>
+    <div className=" w-[100vw] h-[100vh]  bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: `url(${featurebg})` }}>
       <div className="flex justify-end items-center mr-4">
         <button class="bg-blue-500 mt-3 mr-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex justify-end animate-scale-pulse" >
           Terms & conditions

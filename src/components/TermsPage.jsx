@@ -8,7 +8,7 @@ function TermsPage() {
 
     return (
         <>
-            <div  className=" w-[100vw] h-[100vh]  bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${Rulesbg})` }}>
+            <div  className=" w-[100vw] h-[100vh]  bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: `url(${Rulesbg})` }}>
                 <div className="flex justify-end items-center mr-4 relative">
                     <Users/>
                 </div>

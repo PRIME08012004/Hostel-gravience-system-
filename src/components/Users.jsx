@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import check from '../assets/check.png'
 import Fingure from '../assets/fingure1.png'
+import { Link } from 'react-router-dom';
 
 
 function Users() {
@@ -31,11 +32,11 @@ function Users() {
                     </div>
                 }
             </div>
-            <div className={`absolute top-2 right-32 md:top-16 md:right-2 flex bg-blue-300 rounded-full p-1.5 md:p-3 duration-200 ${showUser ? "visible" : "hidden"}`}>
+            <div className={`absolute  right-32 md:top-24 md:right-2 flex bg-blue-300 rounded-full p-1.5 md:p-3 duration-200 ${showUser && checkboxValue ? "visible" : "hidden"}`}>
                 <div className="bg-gray-500 m-1 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-lg">
-                    <button >
-                        Student
-                    </button>
+                <Link to="/Login" className="block text-center">
+        Student
+    </Link>
                 </div>
                 <div className="bg-gray-500 m-1 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-lg">
                     <button >

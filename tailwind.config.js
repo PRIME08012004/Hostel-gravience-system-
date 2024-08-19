@@ -18,6 +18,14 @@ export default {
           "100%": { transform: "translateX(0)" },
         },
       },
+      colors: {
+        'first-color': 'var(--first-color)', 
+        'text-color': 'var(--text-color)',
+      },
+      fontSize: {
+        'big': 'var(--big-font-size)',
+        'normal': 'var(--normal-font-size)',
+      },
     },
   },
   plugins: [],
