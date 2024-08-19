@@ -1,4 +1,6 @@
 import React, { useRef } from 'react'
+import { UpdateCheckboxState } from '../Redux/slices/TermsConditionSlice';
+import { useDispatch } from 'react-redux';
 
 function CheckAgreement(
   {
@@ -7,9 +9,12 @@ function CheckAgreement(
   }
 ) {
 
+  const dispatch = useDispatch();
+
   const checkboxRef = useRef(null);
+
   const checkboxValue = () => {
-    console.log(checkboxRef.current.checked)
+    dispatch(UpdateCheckboxState())
   }
 
   return (
