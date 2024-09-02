@@ -2,7 +2,7 @@ import React from 'react'
 import Rulesbg from '../assets/1.jpeg'
 import preview from '../assets/TermLogo.jpg'
 import Rules from './Rules'
-import Users from './Users'
+import UsersBtn from './UsersBtn'
 
 function TermsPage() {
 
@@ -10,7 +10,7 @@ function TermsPage() {
         <>
             <div  className=" w-[100vw] h-[100vh]  bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: `url(${Rulesbg})` }}>
                 <div className="flex justify-end items-center mr-4 relative">
-                    <Users/>
+                    <UsersBtn/>
                 </div>
                 <div className=" p-3 sm:text-center">
                     <h1 className="text-purple-600  text-3xl font-bold font-serif hover:underline transition duration-700 animate-pulse hover:animate-none hover:text-purple-700 hover:scale-110  mt-4">

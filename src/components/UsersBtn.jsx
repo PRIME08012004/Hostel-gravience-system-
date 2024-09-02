@@ -5,7 +5,7 @@ import Fingure from '../assets/fingure1.png'
 import { Link } from 'react-router-dom';
 
 
-function Users() {
+function UsersBtn() {
     const [showUser, setshow] = useState(false);
     const checkboxValue = useSelector((state) => state.TermCondition.checkBoxState);
 
@@ -34,9 +34,9 @@ function Users() {
             </div>
             <div className={`absolute  right-32 md:top-24 md:right-2 flex bg-blue-300 rounded-full p-1.5 md:p-3 duration-200 ${showUser && checkboxValue ? "visible" : "hidden"}`}>
                 <div className="bg-gray-500 m-1 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-lg">
-                <Link to="/Login" className="block text-center">
-        Student
-    </Link>
+                    <Link to="/Login_signIn" className="block text-center">
+                        Student
+                    </Link>
                 </div>
                 <div className="bg-gray-500 m-1 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-lg">
                     <button >
@@ -49,4 +49,4 @@ function Users() {
     )
 }
 
-export default Users
+export default UsersBtn
