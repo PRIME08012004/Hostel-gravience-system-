@@ -54,9 +54,11 @@ function Login() {
             </div>
           </div>
           {/* Login Button */}
+          <Link to='/RaiseComplaint'>
           <button className="w-full font-semibold py-4 text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300">
             Login
           </button>
+          </Link>
           {/* Sign In Link */}
           <p className="text-center text-lg font-bold  mb-4 hover:underline">New Student?</p>
           <button

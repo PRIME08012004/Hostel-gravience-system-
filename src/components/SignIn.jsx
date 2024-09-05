@@ -1,5 +1,6 @@
 import React from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
+
 
 function SignIn() {
 
@@ -93,7 +94,10 @@ function SignIn() {
 
 
                 {/* Register Button */}
-                <button className="w-full font-semibold py-4 text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300">
+                <button
+                className="w-full font-semibold py-4 text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300"
+                onClick={BackToLogin}
+                >
                     Register
                 </button>
 
