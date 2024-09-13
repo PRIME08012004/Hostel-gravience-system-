@@ -2,7 +2,7 @@ const express = require('express');
 const { Pool } = require('pg'); 
 const cors = require('cors'); 
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt'); // Add bcrypt
+const bcrypt = require('bcrypt'); 
 
 const app = express();
 const port = 5000;
@@ -30,7 +30,7 @@ app.post('/register', async (req, res) => {
   }
 
   try {
-    // Hash the password before storing it
+   
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await pool.query(
