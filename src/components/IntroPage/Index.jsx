@@ -11,15 +11,15 @@ import Contact from './contact';
 const Index = () => {
   return (
     <>
-      <div className="sticky bg-gray-100">
+      <div className="sticky bg-gray-100 ">
         <div className="flex items-center h-16 w-full text-black font-montserrat font-medium">
           <img src={PillaiName} alt="Pillai Logo" className="h-12 ml-5" />
           <img src={PillaiLogo} alt="MES Logo" className="h-12 ml-5" />
           <div>
             <button>
-            <span className="material-symbols-outlined text-4xl  ml-2 md:hidden ">
-              menu
-            </span>
+              <span className="material-symbols-outlined text-4xl  ml-2 md:hidden ">
+                menu
+              </span>
             </button>
           </div>
           <ul className="flex list-none mx-auto p-0">
@@ -44,19 +44,25 @@ const Index = () => {
           </Link>
         </div>
       </div>
-       <div>
+      <div>
         <Carousel />
       </div>
-    <div>
+      <div>
         <WhyChooseUs />
       </div>
-       <div>
+      <div>
         <WeUnderstandStudent />
       </div>
       <div>
         <StudentSaysAboutUs />
       </div>
-      <div>
+      <div className='pb-3'>
+        <div className='font-bold text-3xl font-serif text-center flex justify-center items-center gap-3'>
+          <span className="material-symbols-outlined text-4xl font-bold text-blue-600">
+            headset_mic
+          </span>
+          <h2 >Get In Touch</h2>
+        </div>
         <Contact />
       </div>
     </>

@@ -40,7 +40,7 @@ const Carousel = () => {
   }, [currentIndex]);
 
   return (
-    <div className="relative w-[100vw]   overflow-hidden">
+    <div className="relative overflow-hidden">
       <div
         id="carousel-inner"
         className="flex transition-transform duration-500 ease-in-out w-screen h-[500px]"
