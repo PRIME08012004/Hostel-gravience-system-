@@ -2,7 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt'); // For password comparison
+const bcrypt = require('bcrypt');
 
 const app = express();
 const port = 5000;
@@ -26,7 +26,7 @@ app.post('/Login', async (req, res) => {
   }
 
   try {
-    // Check if the email exists in the database
+   
     const result = await pool.query('SELECT * FROM students WHERE email = $1', [email]);
 
     if (result.rows.length === 0) {
@@ -35,12 +35,12 @@ app.post('/Login', async (req, res) => {
 
     const user = result.rows[0];
 
-    console.log('Fetched user:', user); // Log fetched user details
+    console.log('Fetched user:', user); 
 
-    // Compare the hashed password
+
     const isMatch = await bcrypt.compare(password, user.password);
 
-    console.log('Password comparison result:', isMatch); // Log password comparison result
+    console.log('Password comparison result:', isMatch); 
 
     if (!isMatch) {
       return res.status(400).json({ message: 'Incorrect password' });
