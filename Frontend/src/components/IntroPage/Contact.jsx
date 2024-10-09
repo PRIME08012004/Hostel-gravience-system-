@@ -1,29 +1,58 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import email from '../../assets/Intopage/email.jpg'
 import emailjs from '@emailjs/browser'
+import ToastMessage from '../ToastMessage';
 
 
 function Contact() {
+    const [userData, setuserData] = useState({
+        user_name: "",
+        user_email: "",
+        message: ""
+    });
+    const [emailSendSuccessfully, setemailSendSuccessfully] = useState(false);
+
     const form = useRef();
 
-    const sendEmail = (e)=>{
+    const handelContactForm = (e) => {
+        const { name, value } = e.target;
+        setuserData((user) => (
+            {
+                ...user,
+                [name]: value
+            }
+        ))
+    };
+
+    const sendEmail = (e) => {
         e.preventDefault();
 
         emailjs
-        .sendForm('service_ohykjvh','template_y1kv5ys',form.current,{publicKey : 'B7QYDm0uBDHi6Axvi'})
-        .then(
-            ()=>{
-                console.log("message sent successfully")
-            },
-            (error)=>{
-                console.log("failed")
-            }
-        )
+            .sendForm('service_ohykjvh', 'template_y1kv5ys', form.current, { publicKey: 'B7QYDm0uBDHi6Axvi' })
+            .then(
+                () => {
+                    console.log("message sent successfully");
+                    setuserData({
+                        user_name: "",
+                        user_email: "",
+                        message: ""
+                    });
+                    setemailSendSuccessfully((value) => !value);
+                    setTimeout(() => {
+                        setemailSendSuccessfully((value) => !value);
+                    }, 2500);
+                },
+                (error) => {
+                    console.log("failed")
+                }
+            )
     }
 
     return (
         <>
-
+            <div>
+                {emailSendSuccessfully && <ToastMessage ToastMessage={"Sent Successfully"} />}
+            </div>
 
             <div className='flex justify-around items-center relative '>
                 <div>
@@ -44,6 +73,8 @@ function Contact() {
                             placeholder='Enter your name'
                             type="text"
                             name="user_name"
+                            value={userData.user_name}
+                            onChange={handelContactForm}
                             required />
                         <br />
 
@@ -56,6 +87,8 @@ function Contact() {
                             placeholder='Enter your Email'
                             type="email"
                             name="user_email"
+                            value={userData.user_email}
+                            onChange={handelContactForm}
                             required />
                         <br />
 
@@ -68,6 +101,8 @@ function Contact() {
                             className='bg-gray-100 rounded-lg w-72 p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none  '
                             placeholder='Type message'
                             name="message"
+                            value={userData.message}
+                            onChange={handelContactForm}
                             required></textarea>
 
                         {/* submit Button */}
