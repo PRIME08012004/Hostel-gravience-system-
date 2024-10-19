@@ -9,6 +9,9 @@ import SignIn from './components/Student_forms/SignIn'
 import Features from './components/featuresPage/Features'
 import Complaint from './components/Complaint'
 import Index from './components/IntroPage/Index'
+import Warden_SignIn from './components/Warden_Forms/Warden_SignIn'
+import Warden_Login_SignIn from './components/Warden_Forms/Warden_Login_SignIn'
+import Warden_Login from './components/Warden_Forms/Warden_Login'
 
 
 const router = createBrowserRouter(
@@ -21,6 +24,10 @@ const router = createBrowserRouter(
       <Route path="/Login_signIn" element={<Login_signIn />}>
         <Route path="/Login_signIn/" element={<Login />} />
         <Route path="/Login_signIn/SignIn" element={<SignIn />} />
+      </Route>
+      <Route path='/Warden_Login_SignIn' element={<Warden_Login_SignIn/>}>
+        <Route path='/Warden_Login_SignIn/' element={<Warden_Login/> } />
+        <Route path='/Warden_Login_SignIn/warden_signIn' element={<Warden_SignIn/> } />
       </Route>
 
     </>
