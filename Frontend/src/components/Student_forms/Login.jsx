@@ -26,7 +26,7 @@ function Login() {
 
     // Perform validation or API call here
     // If login is successful, navigate to the next page
-    navigate('/RaiseComplaint');
+    navigate('/StudentProfile');
   }
 
   return (
