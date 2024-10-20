@@ -47,15 +47,15 @@ function Warden_SignIn() {
     }
     return (
         <>
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-center md:gap-9 md:justify-around'>
                 {/* image  */}
                 <div>
-                    <img src={warden_signIn} width={700} alt="Warden_SignIn image" />
+                    <img src={warden_signIn} className='hidden sm:block sm:w-[400px] md:w-[500px] lg:w-[600px] ' alt="Warden_SignIn image" />
                 </div>
 
                 {/* form container  */}
                 <div>
-                    <form onSubmit={onSubmitWarden_RegistrationData} className=" space-y-8 m-auto">
+                    <form onSubmit={onSubmitWarden_RegistrationData} className=" space-y-8 md:mt-0 sm:mr-4 w-[300px]  lg:w-[500px]">
                         <h1 className="text-4xl font-medium mb-8 text-gray-900">
                             Wardens Registration Form
                         </h1>
@@ -182,7 +182,7 @@ function Warden_SignIn() {
                             </div>
 
                             {/* pincode  */}
-                            <div className="relative flex items-center border-b border-gray-400 pb-1">
+                            <div className="relative flex items-center border-b border-gray-400 pb-1 md:pb-0">
                                 <div className="relative ml-2 w-full">
                                     <span className="material-symbols-outlined absolute text-gray-400 top-2">
                                         Pin
@@ -204,22 +204,29 @@ function Warden_SignIn() {
                         </div>
 
 
-                        {/* Register Button */}
-                        <button
-                            className="w-full font-semibold py-4 text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300"
-                        >
-                            Register
-                        </button>
+                        <div className='flex flex-col sm:flex-col justify-around items-center sm:items-stretch'>
+                            {/* Register Button */}
+                            <div className="w-full lg:w-full"> {/* Full width on all screens */}
+                                <button
+                                    className="w-full font-semibold lg:py-2 md:py-1 py-1 px-3 text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300"
+                                >
+                                    Register
+                                </button>
+                            </div>
+
+                            {/* Back to login */}
+                            <div className='flex flex-col justify-center items-center w-full lg:mt-4 mt-2'> {/* Flex column on small screens and full width */}
+                                <p className="text-center font-bold lg:text-lg md:text-sm hidden lg:block hover:underline">Already have an Account?</p>
+                                <button
+                                    onClick={BackToLogin}
+                                    className="w-full font-semibold lg:py-2 md:py-1 py-1 px-3 text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300"
+                                >
+                                    Back To Login
+                                </button>
+                            </div>
+                        </div>
 
 
-                        {/* back to login  */}
-                        <p className="text-center text-lg font-bold  mb-4 hover:underline">Already have an Account?</p>
-                        <button
-                            onClick={BackToLogin}
-                            className="w-full py-4 font-semibold text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300"
-                        >
-                            Back To Login
-                        </button>
                     </form>
                 </div>
             </div>
