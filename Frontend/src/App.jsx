@@ -14,6 +14,7 @@ import Warden_Login_SignIn from './components/Warden_Forms/Warden_Login_SignIn'
 import Warden_Login from './components/Warden_Forms/Warden_Login'
 import StuProfile from './components/Dashboards/Student/StuProfile'
 import MyComplaints from './components/Dashboards/Student/MyComplaints'
+import Meal_Poll from './components/Dashboards/Student/Meal_Poll'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path='/RaiseComplaint' element={<RaiseComplaint/> } />
       <Route path='/MyComplaints' element={<MyComplaints/> } />
       <Route path="/StudentProfile" element={<StuProfile />} />
+      <Route path='/Meal-Poll' element={<Meal_Poll/>} />
       <Route path="/Login_signIn" element={<Login_signIn />}>
         <Route path="/Login_signIn/" element={<Login />} />
         <Route path="/Login_signIn/SignIn" element={<SignIn />} />
