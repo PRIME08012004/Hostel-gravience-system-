@@ -1,181 +1,64 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const app = express();
-const db = require("./db");
-const bcrypt = require("bcrypt");
-const cookieParser = require("cookie-parser");
-app.use(cookieParser());
 
-const complaintRoutes = require("./routes/complaintRoutes");
-const studentRoutes = require("./routes/studentRoutes");
-const wardenRoutes = require("./routes/wardenRoutes");
-const workersRoutes = require("./routes/workersRoutes");
-const userRoutes = require("./routes/userRoutes");
-const { authorizeWarden, authorizeWorker, authorizeStudent } = require("./middleware/auth");
-const PORT=5000;
-
+app.use(bodyParser.json());
 app.use(cors());
-app.use(express.json());
 
-app.use('/', complaintRoutes);
-app.use('/', studentRoutes)
-app.use('/', wardenRoutes)
-app.use('/', workersRoutes)
-app.use('/', userRoutes)
-
-app.use('/students', authorizeStudent, studentRoutes); 
-app.use('/wardens', authorizeWarden, wardenRoutes); 
-app.use('/workers', authorizeWorker, workersRoutes); 
-
-
-
-app.post("/complaints", async (req, res) => {
-  try {
-    const query = `insert into complaint 
-        (name, block_id, category_id,
-        student_id, assigned_worker_id, warden_id, 
-        description, room, is_completed, created_at,
-        assigned_at) 
-        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) returning *` ;
-
-    const { name, block_id, category_id,
-      student_id, assigned_worker_id, warden_id, 
-      description, room, is_completed,
-      assigned_at } = req.body;
-    const newComplaint = await db.pool.query(
-      query,
-      [name, block_id, category_id,
-        student_id, assigned_worker_id, warden_id, 
-        description, room, is_completed, new Date().toISOString(),
-        assigned_at]
-    );
-    res.json(newComplaint.rows[0]);
-  } catch (err) {
-    console.log(err.message);
-  }
+const studentSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    branch: { type: String, required: true },
+    year: { type: Number, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
 });
 
-app.get("/complaints", async (req, res) => {
-  try {
-    const allComplaints = await db.pool.query("SELECT * FROM complaint");
-    res.json(allComplaints.rows);
-  } catch (err) {
-    console.log(err.message);
-  }
+
+const Student = mongoose.model('Student', studentSchema);
+
+
+app.post('/api/register', async (req, res) => {
+    const { name, branch, year, email, password } = req.body;
+
+    try {
+        const newStudent = new Student({ name, branch, year, email, password });
+        await newStudent.save();
+        res.status(201).json({ message: 'Student registered successfully' });
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'Email already registered' });
+        }
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
-app.get("/complaints/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const myComplaint = await db.pool.query(
-      "SELECT * FROM complaint WHERE id = $1",
-      [id]
-    );
-    res.json(myComplaint.rows);
-  } catch (err) {
-    console.log(err.message);
-  }
+
+app.get('/api/students', async (req, res) => {
+    try {
+        const students = await Student.find(); 
+        res.status(200).json(students);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
-app.post("/student", async (req,res) => {
-  try {
-    const query = `insert into student 
-                (block_id, usn, first_name,
-                  last_name, password, email,
-                  phone, sr_no, grad_year, room )
-                  values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-                  returning *` ;
 
-    const { block_id, usn, first_name,
-      last_name, password, email,
-      phone, sr_no, grad_year, room } = req.body;
-
-      const student = await db.pool.query(
-        query, 
-          [block_id, usn, first_name,
-            last_name, password, email,
-            phone, sr_no, grad_year, room]
-      );
-      res.json(student.rows[0]);
-  } catch(err) {
-    console.log(err.message);
-  }
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
-app.get("/student/:id", async (req, res)=> {
-  try {
-    const {id} = req.params;
-    const student = await db.pool.query(
-      "select * from student where id = $1",
-      [id]
-    );
-    res.json(student.rows)
-  } catch (err) {
-    console.log(err.message);
-  }
-})
 
-app.post("/warden", async(req,res) => {
-  try {
-      const query = `insert into warden (
-      name, password, phone, email) values
-         ($1, $2, $3, $4) returning *`;
-         
-      const { name, password, phone, email} = req.body;
+const dbURI = 'mongodb+srv://iamomkar0007:iakil8G1Wj6wC3pk@student.thvjh.mongodb.net/studentDB?retryWrites=true&w=majority';
 
-      const warden = await db.pool.query(
-        query, [ name, password, phone, email]
-      );
-      res.json(warden.rows[0]);
-  }catch(err) {
-    console.log(err.message);
-  }
-})
 
-app.get("/warden/:id", async (req, res)=> {
-  try {
-    const {id} = req.params;
-    const warden = await db.pool.query(
-      "select * from warden where id = $1",
-      [id]
-    );
-    res.json(warden.rows)
-  } catch (err) {
-    console.log(err.message);
-  }
-});
-
-app.post("/workers", async(req,res) => {
-  try {
-      const query = `insert into workers (
-       category_id,  name, password, phone, email) values
-         ($1, $2, $3, $4, $5) returning *`;
-         
-      const {category_id,  name, password, phone, email} = req.body;
-
-      const workers = await db.pool.query(
-        query, [ category_id,  name, password, phone, email]
-      );
-      res.json(workers.rows[0]);
-  }catch(err) {
-    console.log(err.message);
-  }
-})
-
-app.get("/workers/:id", async (req, res)=> {
-  try {
-    const {id} = req.params;
-    const workers = await db.pool.query(
-      "select * from warden where id = $1",
-      [id]
-    );
-    res.json(workers.rows)
-  } catch (err) {
-    console.log(err.message);
-  }
-});
-
-app.listen(5000, () => {
-  db.initDatabase();
-  console.log("listening 5000");
-});
+mongoose.connect(dbURI)
+    .then(() => {
+        console.log('Connected to MongoDB!');
+    })
+    .catch((error) => {
+        console.error('Connection failed:', error.message);
+    });
