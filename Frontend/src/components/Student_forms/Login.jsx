@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 function Login() {
   const [loginData, setloginData] = useState({
     email: "",
-    password: "",
-    hostelId: ""
+    password: ""
+    // hostelId: "" // Removed hostelId from the state since it's commented out
   });
 
   const navigate = useNavigate(); // Hook for programmatic navigation
@@ -72,7 +72,9 @@ function Login() {
               />
             </div>
           </div>
-          {/* Hostel ID Field */}
+          
+          {/* Hostel ID Field (Commented Out) */}
+          {/*
           <div className="relative flex items-center border-b border-gray-400 pb-1">
             <div className="relative ml-2 w-full">
               <span className="material-symbols-outlined absolute text-gray-400 top-2">
@@ -89,6 +91,7 @@ function Login() {
               />
             </div>
           </div>
+          */}
         </div>
         {/* Login Button */}
         <button type='submit' className="w-full font-semibold py-4 text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300">
