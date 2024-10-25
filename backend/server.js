@@ -44,6 +44,29 @@ app.get('/api/students', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Check if the student exists
+        const student = await Student.findOne({ email });
+
+        if (!student) {
+            return res.status(400).json({ message: 'Student not found' });
+        }
+
+        // Compare the password
+        if (student.password !== password) {
+            return res.status(400).json({ message: 'Invalid password' });
+        }
+
+        // If credentials are valid, send a success message
+        res.status(200).json({ message: 'Login successful', student });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 
 const PORT = process.env.PORT || 5000;
