@@ -9,6 +9,31 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
+
+const complaintSchema = new mongoose.Schema({
+    Room: {
+      type: String,
+      required: true, // Room number is required
+    },
+    about: {
+      type: String,
+      required: true, // Description of the complaint is required
+      minlength: 10, // Minimum length for the description
+    },
+    ComplaintName: {
+      type: String,
+      required: true, // Complaint name is required
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now, // Automatically set the date when the complaint is created
+    },
+  });
+  
+  // Create a model from the schema
+  const Complaint = mongoose.model('Complaint', complaintSchema);
+  
+
 // Student Schema
 const studentSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -128,6 +153,30 @@ app.post('/api/warden/login', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+    
+    // Submit a Complaint
+app.post('/api/complaints', async (req, res) => {
+    const { Room, about, ComplaintName } = req.body;
+
+    try {
+        const newComplaint = new Complaint({ Room, about, ComplaintName });
+        await newComplaint.save();
+        res.status(201).json({ message: 'Complaint submitted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error while submitting complaint' });
+    }
+});
+
+// Fetch all Complaints
+app.get('/api/complaints', async (req, res) => {
+    try {
+        const complaints = await Complaint.find();
+        res.status(200).json(complaints);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error while fetching complaints' });
+    }
+});
+
 
 // MongoDB connection and Server setup
 const PORT = process.env.PORT || 5000;
