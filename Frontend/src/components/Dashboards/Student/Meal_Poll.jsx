@@ -1,24 +1,43 @@
-import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import Thumbs_up from '../../../assets/thumbs-up.png';
 import Indian_dishes from '../../../assets/dishes.webp';
+import { useDispatch, useSelector } from 'react-redux';
+import { IncreaseCount ,loaditems } from '../../../Redux/slices/MealSlice.js'
 
 function Meal_Poll() {
-    const [Count, setCount] = useState(0);
-    const navigate = useNavigate()
+    // const [Count, setCount] = useState(0);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const FoodItems = useSelector((state) => state.Meal.FoodArray);
     const [ActivateAnimation, setActivateAnimation] = useState(false);
+    console.log(FoodItems);
 
-    const update_Poll_Count = () => {
-        setCount((currrent_count) => Math.min(currrent_count + 1, 10));
-        setActivateAnimation(true);
 
-        setTimeout(() => {
-            setActivateAnimation(false);
-        }, 2000);
-    };
-
-    const Go_To_Profile = ()=>{
+    const Go_To_Profile = () => {
         navigate('/StudentProfile');
+    }
+    
+    useEffect(()=>{
+        const getitems = JSON.parse(localStorage.getItem("items"));
+        if(getitems){
+            dispatch(loaditems(getitems));
+        }
+    },[]);
+
+    useEffect(()=>{
+        localStorage.setItem("items",JSON.stringify(FoodItems))
+    },[FoodItems]);
+    
+    const increaseCount = (id)=>{
+        console.log(id);
+        dispatch(IncreaseCount(id))
+
+        // setActivateAnimation(true);
+
+        // setTimeout(() => {
+        //     setActivateAnimation(false);
+        // }, 2000);
     }
 
     return (
@@ -30,9 +49,9 @@ function Meal_Poll() {
 
                     {/* Back Button */}
                     <div className='absolute top-5 right-5'>
-                        <button 
-                        className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 font-bold font-serif text-white py-2 px-6 rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ease-in-out focus:outline-none"
-                        onClick={Go_To_Profile}
+                        <button
+                            className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 font-bold font-serif text-white py-2 px-6 rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ease-in-out focus:outline-none"
+                            onClick={Go_To_Profile}
                         >
                             Back
                         </button>
@@ -66,28 +85,38 @@ function Meal_Poll() {
                             {/* Poll container */}
                             <div className='bg-blue-50 rounded-3xl p-6 shadow-inner space-y-6'>
                                 {/* Static Poll Item (You will make this dynamic) */}
-                                <div className='flex justify-between items-center mb-6'>
-                                    <label className='font-medium text-lg text-gray-700 font-poppins' htmlFor="Food1">Paneer</label>
-                                    <input
-                                        type="range"
-                                        name="Paneer"
-                                        id="Paneer"
-                                        value={Count}
-                                        className='w-1/2 mx-4 accent-blue-500 hover:accent-blue-600'
-                                        max={10}
-                                        min={0}
-                                    />
-                                    <div className='text-xl font-semibold font-serif'>
-                                        {Count}
-                                    </div>
-                                    <img
-                                        src={Thumbs_up}
-                                        width={45}
-                                        alt="thumbs up icon"
-                                        onClick={update_Poll_Count}
-                                        className={`transition-transform transform hover:scale-110 duration-300 ease-in-out ${ActivateAnimation ? "animate-bounce-once" : ""}`}
-                                    />
-                                </div>
+                                {
+                                    FoodItems.map((item) => (
+                                        <div key={item.id} className='flex justify-between items-center mb-6'>
+                                            <label className='font-medium text-lg mr-4 text-gray-700 font-poppins' htmlFor={item.option}>
+                                                {item.option || "Unnamed"}
+                                            </label>
+                                            <input
+                                                type="range"
+                                                name={item.option}
+                                                id={item.option}
+                                                value={item.count}
+                                                
+                                                className='w-1/2 mx-4 accent-blue-500 hover:accent-blue-600'
+                                                max={10}
+                                                min={0}
+                                            />
+                                            <div className='text-xl font-semibold font-serif'>
+                                                {item.count !== undefined ? item.count : 0}
+                                            </div>
+                                            <button
+                                            onClick={()=>increaseCount(item.id)}
+                                            >
+                                                <img
+                                                    src={Thumbs_up}
+                                                    width={45}
+                                                    alt="thumbs up icon"
+                                                    className={`transition-transform transform hover:cursor-pointer hover:scale-110 duration-300 ease-in-out ${ActivateAnimation ? "animate-bounce-once" : ""}`}
+                                                />
+                                            </button>
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </main>
 
