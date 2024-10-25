@@ -8,7 +8,8 @@ function SignIn() {
         branch: "",
         currentYear: "",
         email: "",
-        password: ""
+        password: "",
+        HostelId : ""
     });
 
     const navigate = useNavigate();
@@ -106,6 +107,22 @@ function SignIn() {
                                 name='email'
                                 id='email'
                                 value={RegistrationData.email}
+                                onChange= {handelRegistrationData}
+                                className="w-full placeholder:pl-5 h-full bg-transparent border-none outline-none p-2 pl-8 text-lg text-blue-500 focus:ring-0"
+                            />
+                        </div>
+                    </div>
+                    <div className="relative flex items-center border-b border-gray-400 pb-1">
+                        <div className="relative ml-2 w-full">
+                            <span className="material-symbols-outlined absolute text-gray-400 top-2">
+                                ID
+                            </span>
+                            <input
+                                type="HostelId"
+                                placeholder="HostelId"
+                                name='HostelId'
+                                id='HostelId'
+                                value={RegistrationData.HostelId}
                                 onChange= {handelRegistrationData}
                                 className="w-full placeholder:pl-5 h-full bg-transparent border-none outline-none p-2 pl-8 text-lg text-blue-500 focus:ring-0"
                             />
