@@ -15,6 +15,7 @@ import Warden_Login from './components/Warden_Forms/Warden_Login'
 import StuProfile from './components/Dashboards/Student/StuProfile'
 import MyComplaints from './components/Dashboards/Student/MyComplaints'
 import Meal_Poll from './components/Dashboards/Student/Meal_Poll'
+import WarDash from './components/Dashboards/Warden/WarDash'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,33 +23,34 @@ const router = createBrowserRouter(
       <Route path="/" element={<Index />} />
       <Route path="/features" element={<Features />} />
       <Route path="/features/TermsPage" element={<TermsPage />} />
-      <Route path='/RaiseComplaint' element={<RaiseComplaint/> } />
-      <Route path='/MyComplaints' element={<MyComplaints/> } />
+      <Route path='/RaiseComplaint' element={<RaiseComplaint />} />
+      <Route path='/MyComplaints' element={<MyComplaints />} />
       <Route path="/StudentProfile" element={<StuProfile />} />
-      <Route path='/Meal-Poll' element={<Meal_Poll/>} />
-      <Route path="/Login_signIn" element={<Login_signIn />}>
-        <Route path="/Login_signIn/" element={<Login />} />
-        <Route path="/Login_signIn/SignIn" element={<SignIn />} />
-      </Route>
-      <Route path='/Warden_Login_SignIn' element={<Warden_Login_SignIn />}>
-        <Route path='/Warden_Login_SignIn/' element={<Warden_Login />} />
-        <Route path='/Warden_Login_SignIn/warden_signIn' element={<Warden_SignIn />} /> 
-      </Route>
+      <Route path='/warden_dashboard' element={<WarDash/>}  />
+        <Route path='/Meal-Poll' element={<Meal_Poll />} />
+        <Route path="/Login_signIn" element={<Login_signIn />}>
+          <Route path="/Login_signIn/" element={<Login />} />
+          <Route path="/Login_signIn/SignIn" element={<SignIn />} />
+        </Route>
+        <Route path='/Warden_Login_SignIn' element={<Warden_Login_SignIn />}>
+          <Route path='/Warden_Login_SignIn/' element={<Warden_Login />} />
+          <Route path='/Warden_Login_SignIn/warden_signIn' element={<Warden_SignIn />} />
+        </Route>
 
-    </>
-  )
-)
+      </>
+      )
+      )
 
 
 
-function App() {
+      function App() {
   return (
-    <>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    </>
-  )
+      <>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </>
+      )
 }
 
-export default App
+      export default App
