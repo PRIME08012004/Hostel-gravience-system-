@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 
 function SignIn() {
     const [name, setName] = useState('');
@@ -103,7 +104,6 @@ function SignIn() {
                             />
                         </div>
                     </div>
-
                     {/* Email Field */}
                     <div className="relative flex items-center border-b border-gray-400 pb-1">
                         <div className="relative ml-2 w-full">
@@ -120,6 +120,23 @@ function SignIn() {
                             />
                         </div>
                     </div>
+                    <div className="relative flex items-center border-b border-gray-400 pb-1">
+                        <div className="relative ml-2 w-full">
+                            <span className="material-symbols-outlined absolute text-gray-400 top-2">
+                                ID
+                            </span>
+                            <input
+                                type="HostelId"
+                                placeholder="HostelId"
+                                name='HostelId'
+                                id='HostelId'
+                                value={RegistrationData.HostelId}
+                                onChange= {handelRegistrationData}
+                                className="w-full placeholder:pl-5 h-full bg-transparent border-none outline-none p-2 pl-8 text-lg text-blue-500 focus:ring-0"
+                            />
+                        </div>
+                    </div>
+
 
                     {/* Password Field */}
                     <div className="relative flex items-center border-b border-gray-400 pb-1">
@@ -150,8 +167,9 @@ function SignIn() {
                     Register
                 </button>
 
-                {/* back to login */}
-                <p className="text-center text-lg font-bold mb-4 hover:underline">Already have an Account?</p>
+
+                {/* back to login  */}
+                <p className="text-center text-lg font-bold  mb-4 hover:underline">Already have an Account?</p>
                 <button
                     onClick={navigateToLogin}
                     className="w-full py-4 font-semibold text-lg bg-blue-900 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-all duration-300"

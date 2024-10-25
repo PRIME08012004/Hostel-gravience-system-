@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import warden_Login from '../../assets/warden_Login.jpg'
 
 function Warden_Login() {
-
+  const navigate = useNavigate()
   const [WardenLoginData, setWardenLoginData] = useState({
     email: "",
     password: ""
@@ -24,6 +24,7 @@ function Warden_Login() {
       email: "",
       password: ""
     })
+    navigate('/warden_dashboard')
   }
 
   return (
