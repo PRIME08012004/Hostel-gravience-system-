@@ -2,79 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const userRouter=require('./src/route/user-router')
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
+app.use('api/v1/user',userRouter);
 
-
-const complaintSchema = new mongoose.Schema({
-    Room: {
-      type: String,
-      required: true, // Room number is required
-    },
-    about: {
-      type: String,
-      required: true, // Description of the complaint is required
-      minlength: 10, // Minimum length for the description
-    },
-    ComplaintName: {
-      type: String,
-      required: true, // Complaint name is required
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now, // Automatically set the date when the complaint is created
-    },
-  });
-  
-  // Create a model from the schema
-  const Complaint = mongoose.model('Complaint', complaintSchema);
-  
-
-// Student Schema
-const studentSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    branch: { type: String, required: true },
-    year: { type: Number, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-});
-
-const Student = mongoose.model('Student', studentSchema);
-
-// Warden Schema
-const wardenSchema = new mongoose.Schema({
-    userName: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    pincode: { type: Number, required: true },
-    phone: { type: String, required: true }
-});
-
-const Warden = mongoose.model('Warden', wardenSchema);
-
-// Student Registration
-app.post('/api/register', async (req, res) => {
-    const { name, branch, year, email, password } = req.body;
-
-    try {
-        const newStudent = new Student({ name, branch, year, email, password });
-        await newStudent.save();
-        res.status(201).json({ message: 'Student registered successfully' });
-    } catch (error) {
-        if (error.code === 11000) {
-            return res.status(400).json({ message: 'Email already registered' });
-        }
-        res.status(500).json({ message: 'Server error' });
-    }
-});
-
-// Warden Registration
 app.post('/api/warden/register', async (req, res) => {
     const { userName, email, password, city, state, pincode, phone } = req.body;
 
@@ -113,25 +48,7 @@ app.get('/api/wardens', async (req, res) => {
 });
 
 // Student Login
-app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
 
-    try {
-        const student = await Student.findOne({ email });
-
-        if (!student) {
-            return res.status(400).json({ message: 'Student not found' });
-        }
-
-        if (student.password !== password) {
-            return res.status(400).json({ message: 'Invalid password' });
-        }
-
-        res.status(200).json({ message: 'Login successful', student });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error' });
-    }
-});
 
 // Warden Login
 app.post('/api/warden/login', async (req, res) => {
@@ -155,17 +72,7 @@ app.post('/api/warden/login', async (req, res) => {
 });
     
     // Submit a Complaint
-app.post('/api/complaints', async (req, res) => {
-    const { Room, about, ComplaintName } = req.body;
 
-    try {
-        const newComplaint = new Complaint({ Room, about, ComplaintName });
-        await newComplaint.save();
-        res.status(201).json({ message: 'Complaint submitted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error while submitting complaint' });
-    }
-});
 
 // Fetch all Complaints
 app.get('/api/complaints', async (req, res) => {
